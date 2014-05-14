@@ -1,0 +1,1 @@
+web: node_modules/supervisor/lib/cli-wrapper.js -w server -e js server/app.js
