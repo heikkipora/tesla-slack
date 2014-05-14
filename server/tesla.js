@@ -6,6 +6,17 @@ function milesToKm(value) {
     return value * 1.60934;
 }
 
+function toHoursAndMinutes(value) {
+    var hours = Math.floor(value);
+    var minutes = Math.round((value - hours) * 60);
+    if (hours > 0) {
+        return hours + 'h' + minutes + 'min';
+    } else {
+        return minutes + 'min';
+    }
+
+}
+
 function fetchVehicleId() {
     return Bacon.fromCallback(teslams.get_vid, TESLA_CREDENTIALS);
 }
@@ -29,7 +40,8 @@ function fetchClimateState(vehicleId) {
 function mapChargeResponse(state) {
     var estimatedRange = milesToKm(state.est_battery_range).toFixed(1);
     var idealRange = milesToKm(state.ideal_battery_range).toFixed(1);
-    return 'Charging state: ' + state.charging_state + '\nBattery level: ' + state.battery_level + '%\nEstimated range: ' + estimatedRange + 'km\nIdeal range: ' + idealRange + 'km';
+    var timeToFull = toHoursAndMinutes(state.time_to_full_charge);
+    return 'Charging state: ' + state.charging_state + '\nBattery level: ' + state.battery_level + '%\nEstimated range: ' + estimatedRange + 'km\nIdeal range: ' + idealRange + 'km\nTime to full charge: ' + timeToFull;
 }
 
 function mapDriveResponse(state) {
