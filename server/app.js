@@ -73,12 +73,12 @@ app.post('/slack', function (req, res) {
     if (req.body.token === process.env.SLACK_RECEIVE_TOKEN) {
         if (req.body.text.indexOf('battery') >= 0) {
             chargeState().map(toSlackMessage).onValue(sendJson(res));
-        } else if (req.body.text.indexOf('drive') >= 0) {
+        } else if (req.body.text.indexOf('position') >= 0) {
             driveState().map(toSlackMessage).onValue(sendJson(res));
         } else if (req.body.text.indexOf('vehicle') >= 0) {
             vehicleState().map(toSlackMessage).onValue(sendJson(res));
         } else {
-            res.json(toSlackMessage('Supported commands: battery, drive, vehicle'));
+            res.json(toSlackMessage('Supported commands: battery, position, vehicle'));
         }
     } else {
         res.send(403);
