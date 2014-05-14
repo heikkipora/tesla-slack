@@ -43,8 +43,9 @@ function fetchVehicleState(vehicleId) {
 }
 
 function mapChargeResponse(state) {
-    var rangeInKm = milesToKm(state.est_battery_range).toFixed(1);
-    return 'Charging state: ' + state.charging_state + '\nBattery level: ' + state.battery_level + '%\nEstimated range: ' + rangeInKm + 'km';
+    var estimatedRange = milesToKm(state.est_battery_range).toFixed(1);
+    var idealRange = milesToKm(state.ideal_battery_range).toFixed(1);
+    return 'Charging state: ' + state.charging_state + '\nBattery level: ' + state.battery_level + '%\nEstimated range: ' + estimatedRange + 'km\nIdeal range: ' + idealRange + 'km';
 }
 
 function mapDriveResponse(state) {
