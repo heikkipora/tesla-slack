@@ -3,6 +3,8 @@ tesla-slack
 
 Integrates your Tesla Model S to https://slack.com
 
+Uses https://github.com/xoxco/node-slack for talking to Slack and https://github.com/hjespers/teslams for Tesla portal integration.
+
 Requirements
 ------------
 
@@ -14,6 +16,10 @@ The following ENV variables:
 * SLACK_DOMAIN - your Slack subdomain
 * SLACK_SEND_TOKEN - for "incoming Slack webhooks"
 * SLACK_RECEIVE_TOKEN - for "outgoing Slack webhooks"
+
+Running
+-------
+./start.sh
 
 Works nicely when deployed to Heroku.
 
