@@ -1,6 +1,9 @@
 var TESLA_CREDENTIALS = {email: process.env.TESLA_USERNAME, password: process.env.TESLA_PASSWORD };
 var Bacon = require('baconjs').Bacon,
-    teslams = require('teslams');
+    teslams = require('teslams'),
+    _ = require('lodash'),
+    geolib = require('geolib'),
+    knownPlaces = require('./known-places');
 
 function milesToKm(value) {
     return value * 1.60934;
@@ -46,9 +49,18 @@ function mapChargeResponse(state) {
 
 function mapDriveResponse(state) {
     var speed = milesToKm(state.speed || 0).toFixed(0);
-    return 'Speed: ' + speed + 'km/h\nPosition: http://google.fi/maps/place/' + state.latitude + ',' + state.longitude;
+    var speedTxt = 'Speed: ' + speed + 'km/h\n';
+    var inKnownPlace = isInAlreadyKnownPlace(state.latitude, state.longitude);
+    var locationTxt = 'Position: ' + (inKnownPlace ? inKnownPlace.name + ' @ ': '' ) + 'http://google.fi/maps/place/' + state.latitude + ',' + state.longitude;
+    return speedTxt + locationTxt;
 }
 
+function isInAlreadyKnownPlace(latitude, longitude) {
+    return _.find(knownPlaces, function(place) {
+      var distance = geolib.getDistance({latitude: latitude, longitude: longitude}, place);
+      return distance < place.radius;
+    });
+}
 function mapVehicleResponse(state) {
     return 'Firmware version: ' + state.car_version + '\nLocked: ' + (state.locked ? 'yes' : 'no');
 }
