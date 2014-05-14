@@ -22,6 +22,10 @@ function toSlackMessage(text) {
     };
 }
 
+function hasCommand(req, name) {
+    return req.body.text.indexOf(name) >= 0;
+}
+
 function milesToKm(value) {
     return value * 1.60934;
 }
@@ -72,14 +76,16 @@ function vehicleState() {
 
 app.post('/slack', function (req, res) {
     if (req.body.token === process.env.SLACK_RECEIVE_TOKEN) {
-        if (req.body.text.indexOf('battery') >= 0) {
+        if (hasCommand(req, 'battery')) {
             chargeState().map(toSlackMessage).onValue(sendJson(res));
-        } else if (req.body.text.indexOf('position') >= 0) {
+        } else if (hasCommand(req, 'position')) {
             driveState().map(toSlackMessage).onValue(sendJson(res));
-        } else if (req.body.text.indexOf('vehicle') >= 0) {
+        } else if (hasCommand(req, 'vehicle')) {
             vehicleState().map(toSlackMessage).onValue(sendJson(res));
+        } else if (hasCommand(req, 'honk')) {
+            res.json(toSlackMessage('TÖÖÖÖÖT-TÖÖÖÖÖÖÖÖÖÖÖT!'));
         } else {
-            res.json(toSlackMessage('Supported commands: battery, position, vehicle'));
+            res.json(toSlackMessage('Supported commands: battery, honk, position, vehicle'));
         }
     } else {
         res.send(403);
