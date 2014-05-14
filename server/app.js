@@ -82,7 +82,7 @@ app.post('/slack', function (req, res) {
         } else if (hasCommand(req, 'vehicle')) {
             vehicleState().map(toSlackMessage).onValue(sendJson(res));
         } else if (hasCommand(req, 'honk')) {
-            res.json(toSlackMessage('TÖÖÖÖÖT-TÖÖÖÖÖÖÖÖÖÖÖT!'));
+            res.json(toSlackMessage(':trumpet: TÖÖÖÖÖT-TÖÖÖÖÖÖÖÖÖÖÖT!'));
         } else {
             res.json(toSlackMessage('Supported commands: battery, honk, position, vehicle'));
         }
