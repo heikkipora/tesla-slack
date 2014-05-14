@@ -1,0 +1,15 @@
+[
+  {
+    "name" : "Stockmann-park",
+    "latitude" : 60.16674,
+    "longitude" : 24.942227,
+    "radius" : 100
+  },
+
+  {
+    "name" : "Samsung",
+    "latitude" : 60.188205,
+    "longitude" : 24.809528,
+    "radius" : 150
+  }
+]
