@@ -16,7 +16,6 @@
     "logfmt": "~1.1.2",
     "body-parser": "~1.0.2",
     "baconjs": "~0.7.10",
-    "node-slack": "0.0.3",
     "teslams": "~0.9.4"
   },
   "devDependencies": {
