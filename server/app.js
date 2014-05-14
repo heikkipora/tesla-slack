@@ -28,6 +28,8 @@ app.post('/slack', function (req, res) {
     if (req.body.token === process.env.SLACK_RECEIVE_TOKEN) {
         if (hasCommand(req, 'battery')) {
             tesla.chargeState().map(toSlackMessage).onValue(sendJson(res));
+        } else if (hasCommand(req, 'climate')) {
+            tesla.climateState().map(toSlackMessage).onValue(sendJson(res));
         } else if (hasCommand(req, 'position')) {
             tesla.driveState().map(toSlackMessage).onValue(sendJson(res));
         } else if (hasCommand(req, 'vehicle')) {
@@ -35,7 +37,7 @@ app.post('/slack', function (req, res) {
         } else if (hasCommand(req, 'honk')) {
             res.json(toSlackMessage(':trumpet: TÖÖÖÖÖT-TÖÖÖÖÖÖÖÖÖÖÖT!'));
         } else {
-            res.json(toSlackMessage('Supported commands: battery, honk, position, vehicle'));
+            res.json(toSlackMessage('Supported commands: battery, honk, position, vehicle, climate'));
         }
     } else {
         res.send(403);

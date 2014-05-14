@@ -22,6 +22,10 @@ function fetchVehicleState(vehicleId) {
     return Bacon.fromCallback(teslams.get_vehicle_state, vehicleId);
 }
 
+function fetchClimateState(vehicleId) {
+    return Bacon.fromCallback(teslams.get_climate_state, vehicleId);
+}
+
 function mapChargeResponse(state) {
     var estimatedRange = milesToKm(state.est_battery_range).toFixed(1);
     var idealRange = milesToKm(state.ideal_battery_range).toFixed(1);
@@ -37,6 +41,32 @@ function mapVehicleResponse(state) {
     return 'Firmware version: ' + state.car_version + '\nLocked: ' + (state.locked ? 'yes' : 'no');
 }
 
+function mapClimateResponse(state) {
+    var internalTemp = feelsLike(state.inside_temp) + ' (' + state.inside_temp + 'C)';
+    var externalTemp = feelsLike(state.outside_temp) + ' (' + state.outside_temp + 'C)';
+    return 'Inside: ' + internalTemp +'\nOutside: ' + externalTemp;
+}
+
+function feelsLike(temp) {
+    if (temp <= -20) {
+        return "HORRIBLY COLD NUCLEAR WINTER WEATHER";
+    } else if (temp <= -10) {
+        return "darn cold";
+    } else if (temp <= 0) {
+        return "quite crispy";
+    } else if (temp <= 10) {
+        return "a bit nippy";
+    } else if (temp <= 20) {
+        return "cool and mellow";
+    } else if (temp <= 25) {
+        return "nice and balmy";
+    } else if (temp <= 30) {
+        return "warm and toasty";
+    } else {
+        return "hot and sweaty";
+    }
+}
+
 exports.chargeState = function () {
     return fetchVehicleId().flatMap(fetchChargeState).map(mapChargeResponse);
 };
@@ -47,4 +77,8 @@ exports.driveState = function () {
 
 exports.vehicleState = function () {
     return fetchVehicleId().flatMap(fetchVehicleState).map(mapVehicleResponse);
+};
+
+exports.climateState = function () {
+    return fetchVehicleId().flatMap(fetchClimateState).map(mapClimateResponse);
 };
