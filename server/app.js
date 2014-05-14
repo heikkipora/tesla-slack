@@ -1,29 +1,13 @@
 var SLACK_BOT_NAME = process.env.SLACK_BOT_NAME || 'Tesla Model S';
 var TESLA_CREDENTIALS = {email: process.env.TESLA_USERNAME, password: process.env.TESLA_PASSWORD };
-var env = process.env.NODE_ENV || 'dev';
 
 var Bacon = require('baconjs').Bacon,
     express = require('express'),
-    teslams = require('teslams'),
-    Slack = require('node-slack');
+    teslams = require('teslams');
 
 var app = express();
 app.use(require('body-parser')());
 app.use(require('logfmt').requestLogger());
-
-var slack = new Slack(process.env.SLACK_DOMAIN, process.env.SLACK_SEND_TOKEN);
-
-function sendToSlack(text, channel) {
-    if (env === 'dev') {
-        console.log(text);
-    } else {
-        slack.send({
-            text: text,
-            channel: '#' + channel,
-            username: SLACK_BOT_NAME
-        });
-    }
-}
 
 function sendJson(res) {
     return function (message) {
@@ -88,13 +72,10 @@ function vehicleState() {
 app.post('/slack', function (req, res) {
     if (req.body.token === process.env.SLACK_RECEIVE_TOKEN) {
         if (req.body.text.indexOf('battery') >= 0) {
-            sendToSlack('Fetching battery state, please wait...', req.body.channel_name);
             chargeState().map(toSlackMessage).onValue(sendJson(res));
         } else if (req.body.text.indexOf('drive') >= 0) {
-            sendToSlack('Fetching drive state, please wait...', req.body.channel_name);
             driveState().map(toSlackMessage).onValue(sendJson(res));
         } else if (req.body.text.indexOf('vehicle') >= 0) {
-            sendToSlack('Fetching vehicle state, please wait...', req.body.channel_name);
             vehicleState().map(toSlackMessage).onValue(sendJson(res));
         } else {
             res.json(toSlackMessage('Supported commands: battery, drive, vehicle'));
