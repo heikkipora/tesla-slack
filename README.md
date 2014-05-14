@@ -17,11 +17,25 @@ The following ENV variables:
 * TESLA_PASSWORD - password to the Tesla portal
 * SLACK_RECEIVE_TOKEN - for "outgoing Slack webhooks"
 
-Running
--------
+Testing locally
+---------------
 ./start.sh
+
+Fetch battery information:
+
+  curl --data "token=<insert-SLACK_RECEIVE_TOKEN-here>&text=battery" http://localhost:5000/slack
+
+Fetch position information:
+
+  curl --data "token=<insert-SLACK_RECEIVE_TOKEN-here>&text=position" http://localhost:5000/slack
+
+Fetch vehicle information:
+
+  curl --data "token=<insert-SLACK_RECEIVE_TOKEN-here>&text=vehicle" http://localhost:5000/slack
 
 Works nicely when deployed to Heroku.
 
 Point the outoing Slack webhook configuration to /slack on your node.js instance.
 
+Testing locally
+_
