@@ -11,5 +11,12 @@
     "latitude" : 60.188205,
     "longitude" : 24.809528,
     "radius" : 150
+  },
+
+  {
+    "name" : "Q-Park Erottaja",
+    "latitude" : 60.165304,
+    "longitude" : 24.943345,
+    "radius" : 100
   }
 ]
