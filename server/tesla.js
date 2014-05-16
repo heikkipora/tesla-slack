@@ -50,8 +50,11 @@ function mapChargeResponse(state) {
 function mapDriveResponse(state) {
     var speed = milesToKm(state.speed || 0).toFixed(0);
     var speedTxt = 'Speed: ' + speed + 'km/h\n';
-    var inKnownPlace = isInAlreadyKnownPlace(state.latitude, state.longitude);
-    var locationTxt = 'Position: ' + (inKnownPlace ? inKnownPlace.name + ' @ ': '' ) + 'http://google.fi/maps/place/' + state.latitude + ',' + state.longitude;
+    var locationTxt = 'Position: unknown';
+    if (state.latitude && state.longitude) {
+        var inKnownPlace = isInAlreadyKnownPlace(state.latitude, state.longitude);
+        locationTxt = 'Position: ' + (inKnownPlace ? inKnownPlace.name + ' @ ': '' ) + 'http://google.fi/maps/place/' + state.latitude + ',' + state.longitude;
+    }
     return speedTxt + locationTxt;
 }
 
