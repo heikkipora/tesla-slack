@@ -65,7 +65,8 @@ function mapChargeResponse(state) {
 
 function mapDriveResponse(state) {
     var speed = milesToKm(state.speed || 0).toFixed(0);
-    return 'Speed: ' + speed + 'km/h\nPosition: http://google.fi/maps/place/' + state.latitude + ',' + state.longitude;
+    var position = state.latitude + ',' + state.longitude
+    return 'Speed: ' + speed + 'km/h\nPosition: http://maps.googleapis.com/maps/api/staticmap?center=' + position + '&markers=' + position + '&size=600x300&zoom=12';
 }
 
 function mapVehicleResponse(state) {
