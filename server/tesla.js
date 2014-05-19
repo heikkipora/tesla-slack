@@ -72,7 +72,9 @@ function mapDriveResponse(state) {
     var locationTxt = 'Position: unknown';
     if (state.latitude && state.longitude) {
         var inKnownPlace = isInAlreadyKnownPlace(state.latitude, state.longitude);
-        locationTxt = 'Position: ' + (inKnownPlace ? inKnownPlace.name + ' @ ': '' ) + 'http://google.fi/maps/place/' + state.latitude + ',' + state.longitude;
+        var position = state.latitude + ',' + state.longitude
+        var googleMapsUrl = 'http://maps.googleapis.com/maps/api/staticmap?center=' + position + '&markers=' + position + '&size=600x300&zoom=12'
+        locationTxt = 'Position: ' + (inKnownPlace ? inKnownPlace.name + ' @ ': '' ) + googleMapsUrl;
     }
     return speedTxt + locationTxt;
 }
