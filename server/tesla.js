@@ -5,6 +5,8 @@ var Bacon = require('baconjs').Bacon,
     geolib = require('geolib'),
     knownPlaces = require('./known-places');
 
+var cachedVehicleId;
+
 function milesToKm(value) {
     return value * 1.60934;
 }
@@ -21,7 +23,13 @@ function toHoursAndMinutes(value) {
 }
 
 function fetchVehicleId() {
-    return Bacon.fromCallback(teslams.get_vid, TESLA_CREDENTIALS);
+    if (cachedVehicleId) {
+        return Bacon.once(cachedVehicleId);
+    }
+    return Bacon.fromCallback(teslams.get_vid, TESLA_CREDENTIALS).doAction(function(vehicleId) {
+        console.log('Cached vehicle id ' + vehicleId);
+        cachedVehicleId = vehicleId;
+    });
 }
 
 function fetchChargeState(vehicleId) {
