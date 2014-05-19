@@ -54,7 +54,7 @@ function fetchClimateState(vehicleId) {
 function mapRange(state) {
     var estimatedRange = milesToKm(state.est_battery_range).toFixed(0);
     var idealRange = milesToKm(state.ideal_battery_range).toFixed(0);
-    return 'Current range is ' + estimatedRange + '-' + idealRange + ' km';
+    return 'Current range is ' + estimatedRange + '-' + idealRange + ' km.';
 }
 
 function mapChargeResponse(state) {
