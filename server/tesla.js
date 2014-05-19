@@ -13,9 +13,9 @@ function toHoursAndMinutes(value) {
     var hours = Math.floor(value);
     var minutes = Math.round((value - hours) * 60);
     if (hours > 0) {
-        return hours + 'h' + minutes + 'min';
+        return hours + ' h' + minutes + ' min';
     } else {
-        return minutes + 'min';
+        return minutes + ' min';
     }
 
 }
@@ -40,11 +40,22 @@ function fetchClimateState(vehicleId) {
     return Bacon.fromCallback(teslams.get_climate_state, vehicleId);
 }
 
+function mapRange(state) {
+    var estimatedRange = milesToKm(state.est_battery_range).toFixed(0);
+    var idealRange = milesToKm(state.ideal_battery_range).toFixed(0);
+    return 'Current range is ' + estimatedRange + '-' + idealRange + ' km';
+}
+
 function mapChargeResponse(state) {
-    var estimatedRange = milesToKm(state.est_battery_range).toFixed(1);
-    var idealRange = milesToKm(state.ideal_battery_range).toFixed(1);
-    var timeToFull = toHoursAndMinutes(state.time_to_full_charge);
-    return 'Charging state: ' + state.charging_state + '\nBattery level: ' + state.battery_level + '%\nEstimated range: ' + estimatedRange + 'km\nIdeal range: ' + idealRange + 'km\nTime to full charge: ' + timeToFull;
+    switch (state.charging_state) {
+        case 'Charging':
+            var timeToFull = toHoursAndMinutes(state.time_to_full_charge);
+            return 'Charging at ' + state.charger_power + ' kW, complete in ' + timeToFull + '. ' + mapRange(state);
+        case 'Complete':
+            return 'Fully charged. ' + mapRange(state);
+        default:
+            return 'Disconnected. ' + mapRange(state);
+    }
 }
 
 function mapDriveResponse(state) {
