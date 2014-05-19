@@ -14,12 +14,15 @@ function milesToKm(value) {
 function toHoursAndMinutes(value) {
     var hours = Math.floor(value);
     var minutes = Math.round((value - hours) * 60);
-    if (hours > 0) {
-        return hours + ' h' + minutes + ' min';
-    } else {
-        return minutes + ' min';
-    }
+    var msg = '';
 
+    if (hours > 0) {
+        msg = hours + ' h';
+    }
+    if (minutes > 0) {
+        msg += (hours ? ' ' : '') + minutes + ' min';
+    }
+    return msg;
 }
 
 function fetchVehicleId() {
