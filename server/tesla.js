@@ -14,12 +14,15 @@ function milesToKm(value) {
 function toHoursAndMinutes(value) {
     var hours = Math.floor(value);
     var minutes = Math.round((value - hours) * 60);
-    if (hours > 0) {
-        return hours + ' h' + minutes + ' min';
-    } else {
-        return minutes + ' min';
-    }
+    var msg = '';
 
+    if (hours > 0) {
+        msg = hours + ' h';
+    }
+    if (minutes > 0) {
+        msg += (hours ? ' ' : '') + minutes + ' min';
+    }
+    return msg;
 }
 
 function fetchVehicleId() {
@@ -51,7 +54,7 @@ function fetchClimateState(vehicleId) {
 function mapRange(state) {
     var estimatedRange = milesToKm(state.est_battery_range).toFixed(0);
     var idealRange = milesToKm(state.ideal_battery_range).toFixed(0);
-    return 'Current range is ' + estimatedRange + '-' + idealRange + ' km';
+    return 'Current range is ' + estimatedRange + '-' + idealRange + ' km.';
 }
 
 function mapChargeResponse(state) {
