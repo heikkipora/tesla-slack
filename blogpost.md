@@ -5,7 +5,7 @@ Talking to the Tesla
 
 We got our Intergalactic SpaceBoat of Light and Wonder, as [Oatmeal](http://theoatmeal.com/comics/tesla_model_s) rightly put it, in May.
 
-It is be used as a platform for developing new services, and for research projects with the Ministry of Transport and Communications.
+It will be used as a platform for developing new services, and for research projects with the Ministry of Transport and Communications.
 But most importantly for me, it is available for Reaktorians to drive and tinker with.
 
 Sharing a revolutionary, all-electric, car with a tightly allocated calendar resulted in a constant flow of queries:
