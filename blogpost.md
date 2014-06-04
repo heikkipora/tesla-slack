@@ -5,17 +5,12 @@ Talking to the Tesla
 
 We got our Intergalactic SpaceBoat of Light and Wonder, as [Oatmeal](http://theoatmeal.com/comics/tesla_model_s) rightly put it, in May.
 
-It will be used as a platform for developing new services, and for research projects with the Ministry of Transport and Communications.
-But most importantly for me, it is available for Reaktorians to
+It is be used as a platform for developing new services, and for research projects with the Ministry of Transport and Communications.
+But most importantly for me, it is available for Reaktorians to drive and tinker with.
 
-Being a revolutionary new vehicle, our people would like to know the whereabout of it.
-Where it is currently. Is it resting at one of the high-power charging stations near our offices downtown Helsinki?
-How much is the expected range if I get the keys and hit the road now ?
-As it happens, the HTTP API Tesla's mobile apps are interfacing have been reverse-engineered. The documentation is available at [http://docs.timdorr.apiary.io]
+Sharing a revolutionary, all-electric, car with a tightly allocated calendar resulted in a constant flow of queries:
 
-Suffice to say it is implemented with the Slack 'Outgoing WebHooks API' and runs on the excellent [Heroku](http://heroku.com) cloud service.
-
-Where is it? How much charge is left in the battery? Is it connected to a high-power charger?
+Where is it? How much juice is left in the battery and what is the exepcted range? Is it connected to a high-power charger?
 
 I decided to invest a couple of hours of my time one morning and coded a small 'Tesla-bot' for answering these questions automatically.
 It's implemented in javascript and Node.js and lives on [Heroku](http://heroku.com).
@@ -41,7 +36,7 @@ Receiving and responding to messages tagged in Slack is as simple as handling a 
       }
     });
 
-Fortunately there's a ready-made Node.js client module called [teslams]([https://github.com/hjespers/teslams]) for the Tesla Model S REST API  so rest of the integration is also smooth.
+Fortunately there's a ready-made Node.js client module called [teslams]([https://github.com/hjespers/teslams]) for the [Tesla Model S REST API]([http://docs.timdorr.apiary.io])  so rest of the integration is also smooth.
 
 Authentication
 ---
@@ -90,4 +85,4 @@ During the weeks with the Tesla Model S I have learnt that having an 'always-onl
 
 The error-handling capabilities of the ```teslams``` module are also sub-par at the moment as no error information is passed to the callbacks.
 
-Source code for the bot is available on [GitHub](https://github.com/heikkipora/tesla-slack). Feel free to contribute a pull request. Some of my enthusiastic colleagues already did, thanks for that! Please note that my implementation leverages the excellent [Bacon.js](https://github.com/baconjs/bacon.js) FRP library, which I omitted from the examples above for brevity.
+Source code for the bot is available on [GitHub](https://github.com/heikkipora/tesla-slack), so feel free to contribute a pull request. Some of my enthusiastic colleagues already did, thanks for that! Please note that my implementation leverages the excellent [Bacon.js](https://github.com/baconjs/bacon.js) FRP library, which I omitted from the examples above for brevity.
