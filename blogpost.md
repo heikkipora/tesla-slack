@@ -81,7 +81,7 @@ The ```get_charge_state``` API call provides verbose information about the batte
       var chargerPowerInKw = state.charger_power; // valid when charging
     });
 
-Some of the more 'funny' functionality includes being able to flash the lights and honk the horn remotely. These calls do not, fortunately, have any effect when the vehicle is on the road :).
+Some of the more 'funny' functionality includes being able to flash the lights and honk the horn remotely. These calls do not, fortunately, have any effect when driving :)
 
 Conclusion
 ---
@@ -90,6 +90,4 @@ During the weeks with the Tesla Model S I have learnt that having an 'always-onl
 
 The error-handling capabilities of the ```teslams``` module are also sub-par at the moment as no error information is passed to the callbacks.
 
-Source code for the bot is available on [GitHub](https://github.com/heikkipora/tesla-slack). Feel free to contribute in the form of GitHub pull requests. Some of my enthusiastic colleagues already did, thanks for that!
-
-Please note that my implementation leverages the excellent [Bacon.js](https://github.com/baconjs/bacon.js) FRP library, which I omitted from the examples above for brevity.
+Source code for the bot is available on [GitHub](https://github.com/heikkipora/tesla-slack). Feel free to contribute a pull request. Some of my enthusiastic colleagues already did, thanks for that! Please note that my implementation leverages the excellent [Bacon.js](https://github.com/baconjs/bacon.js) FRP library, which I omitted from the examples above for brevity.
