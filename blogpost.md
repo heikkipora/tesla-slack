@@ -1,7 +1,7 @@
 Talking to the Tesla
 ====
 
-![](tesla.jpg?raw=true)
+![](tessi.jpg?raw=true)
 
 We got our Intergalactic SpaceBoat of Light and Wonder, as [Oatmeal](http://theoatmeal.com/comics/tesla_model_s) righly put it, in May.
 
