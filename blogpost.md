@@ -12,8 +12,8 @@ Sharing a revolutionary all-electric car with a tightly allocated calendar resul
 
 * Where is it ?
 * Is it heading back home already ?
-* How much juice is left in the battery and what is the exepcted range ?
-* Is it connected to a high-power charger ?
+* How much juice is left in the battery and what is the expected range if I get the keys and hit the road now ?
+* Is it connected to a high-powered charger at Q-Park ?
 
 I decided to invest a couple of hours of my time one morning and coded a small 'Tesla-bot' for answering these questions automatically.
 It's implemented in javascript and Node.js and lives on [Heroku](http://heroku.com).
