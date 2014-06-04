@@ -39,7 +39,7 @@ Receiving and responding to messages tagged in Slack is as simple as handling a 
       }
     });
 
-Fortunately there's a ready-made Node.js client module called [teslams]([https://github.com/hjespers/teslams]) for the [Tesla Model S REST API]([http://docs.timdorr.apiary.io]) so rest of the integration is smooth as well.
+Fortunately there's a ready-made Node.js client module called [teslams](https://github.com/hjespers/teslams) for the [Tesla Model S REST API](http://docs.timdorr.apiary.io) so rest of the integration is smooth as well.
 
 Authentication
 ---
