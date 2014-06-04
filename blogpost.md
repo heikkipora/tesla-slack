@@ -90,7 +90,7 @@ Conclusion
 During the weeks with the Tesla Model S I have learnt that having an 'always-online' car doesn't mean exactly that.
 The car looses connectivity occasionally (it's a 3G data link anyways) and the on-board Ubuntu-powered computer needs to be rebooted as a last resort if it does not recover by itself.
 
-The error-handling capabilities of the ```teslams``` module are also sub-par at the moment as no error information is passed to the callbacks.
+Error-handling capabilities of the ```teslams``` module are also sub-par at the moment as no error information is passed to the callbacks.
 
 Source code for the bot is available on [GitHub](https://github.com/heikkipora/tesla-slack), so feel free to contribute a pull request.
 Some of my enthusiastic colleagues already did, thanks for that! Please note that my implementation leverages the excellent [Bacon.js](https://github.com/baconjs/bacon.js) FRP library, which I omitted from the examples above for brevity.
