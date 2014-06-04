@@ -10,10 +10,10 @@ But most importantly for me, it is available for Reaktorians to drive and tinker
 
 Sharing a revolutionary all-electric car with a tightly allocated calendar resulted in a constant flow of queries:
 
-* Where is it ?
-* Is it heading back home already ?
-* How much juice is left in the battery and what is the expected range if I get the keys and hit the road now ?
-* Is it connected to a high-powered charger at Q-Park ?
+* Where is it?
+* Is it heading back home already?
+* How much juice is left in the battery and what is the expected range if I get the keys and hit the road now?
+* Is it connected to a high-powered charger at Q-Park?
 
 I decided to invest a couple of hours of my time one morning and coded a small 'Tesla-bot' for answering these questions automatically.
 It's implemented in javascript and Node.js and lives on [Heroku](http://heroku.com).
@@ -45,8 +45,8 @@ Authentication
 ---
 
 In order gain access to the car we need to authenticate and fetch the vehicle id of our Tesla Model S.
-As part of a successful authentication the Tesla API returns an access token which provides full access to the rest of the API endpoints.
-Fortunately the ```teslams``` module takes care of authentication behind the scenes as long it is provided with user credentials.
+As part of a successful authentication the Tesla API returns an access token, which provides full access to the rest of the API endpoints.
+Fortunately the ``teslams`` module takes care of authentication behind the scenes as long it is provided with user credentials.
 
     var teslams = require('teslams');
     teslams.get_vid({ email: 'username@tesla', password: 'pa55w0rd' }, function(vehicleId) {
@@ -87,10 +87,10 @@ These calls do not, fortunately, have any effect when driving :)
 Conclusion
 ---
 
-During the weeks with the Tesla Model S I have learnt that having an 'always-online' car doesn't mean exactly that.
+During the weeks with the Tesla Model S I have learnt that having an always-online car doesn't mean exactly that.
 The car looses connectivity occasionally (it's a 3G data link anyways) and the on-board Ubuntu-powered computer needs to be rebooted as a last resort if it does not recover by itself.
 
-Error-handling capabilities of the ```teslams``` module are also sub-par at the moment as no error information is passed to the callbacks.
+Error-handling capabilities of the ``teslams`` module are also sub-par at the moment as no error information is passed to the callbacks.
 
 Source code for the bot is available on [GitHub](https://github.com/heikkipora/tesla-slack), so feel free to contribute a pull request.
 Some of my enthusiastic colleagues already did, thanks for that! Please note that my implementation leverages the excellent [Bacon.js](https://github.com/baconjs/bacon.js) FRP library, which I omitted from the examples above for brevity.
