@@ -1,7 +1,9 @@
 Talking to the Tesla
 ====
 
-Reaktor got the International Spaceship of Light and Wonder, as Oatmeal righly put it, in May.
+![](tesla.jpg?raw=true)
+
+We got our Intergalactic SpaceBoat of Light and Wonder, as [Oatmeal](http://theoatmeal.com/comics/tesla_model_s) righly put it, in May.
 
 It will be used as a platform for developing new services for all-electric, always-connected vehicles in co-operation with LVM, Tekes
 - as well as recreational purposes for our people.
@@ -11,17 +13,31 @@ Where it is currently. Is it resting at one of the high-power charging stations 
 How much is the expected range if I get the keys and hit the road now ?
 As it happens, the HTTP API Tesla's mobile apps are interfacing have been reverse-engineered. The documentation is available at [http://docs.timdorr.apiary.io]
 
-We use [https://slack.com] for our internal real-time communications. Slack provides an easy-to-use Outgoing WebHooks API for integrating external services
-as 'bots' to it.
-
 Suffice to say it is implemented with the Slack 'Outgoing WebHooks API' and runs on the excellent [Heroku](http://heroku.com) cloud service.
 
-Fortunately there's a ready-made Node.js client module for the Tesla Model S REST API [https://github.com/hjespers/teslams] so I get going really quickly.
-
-Slack
+Enter Slack
 -----
 
 ![](screenshot.png?raw=true)
+
+We rely heavily on [Slack](https://slack.com) for our internal real-time communication. It seemed like a natural place to build a Tesla-bot for.
+Slack provides an easy-to-use [Outgoing WebHooks API](https://api.slack.com/) for integrating external.
+
+Receiving and responding to messages tagged in Slack is as simple as handling a HTTP POST request:
+
+    var express = require('express');
+    var app = express();
+    app.use(require('body-parser')());
+
+    app.post('/slack', function (req, res) {
+      if (req.body.token === SLACK_RECEIVE_TOKEN) {
+        res.json({ text: 'Supported commands: battery, honk, position, vehicle, climate', username: SLACK_BOT_NAME });
+      } else {
+        res.send(403);
+      }
+    });
+
+Fortunately there's a ready-made Node.js client module for the Tesla Model S REST API [https://github.com/hjespers/teslams] so rest of the integration is not more difficult.
 
 Authentication
 ---
