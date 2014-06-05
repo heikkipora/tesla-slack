@@ -1,4 +1,6 @@
-Talking to the Tesla
+Now published at http://reaktor.fi/blog/talking-tesla/
+
+Talking to Tesla
 ====
 
 ![](tessi.jpg?raw=true)
