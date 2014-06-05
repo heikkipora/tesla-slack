@@ -3,6 +3,8 @@ tesla-slack
 
 Integrates your Tesla Model S to https://slack.com
 
+!["Slack integration screenshot"](screenshot.png)
+
 Uses https://github.com/hjespers/teslams for Tesla portal integration.
 
 Take a look at http://docs.timdorr.apiary.io/ for reference
