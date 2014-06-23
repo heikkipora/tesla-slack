@@ -49,6 +49,10 @@ app.post('/slack', function (req, res) {
     }
 });
 
+app.get('/', function (req,res) {
+    res.send('ok'); // used for newrelic monitoring at Heroku
+});
+
 var port = process.env.PORT || 5000;
 app.listen(port, function () {
     console.log("Listening on " + port);
