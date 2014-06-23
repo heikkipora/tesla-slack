@@ -12,6 +12,7 @@
     "node": "~0.10"
   },
   "dependencies": {
+    "newrelic": "~1.7.3",
     "baconjs": "~0.7.10",
     "body-parser": "~1.0.2",
     "express": "~4.1.1",

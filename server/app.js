@@ -1,5 +1,10 @@
 var SLACK_BOT_NAME = process.env.SLACK_BOT_NAME || 'Tesla Model S';
 
+var env = process.env.NODE_ENV || 'dev';
+if (env === 'production') {
+    require('newrelic');
+}
+
 var express = require('express'),
     tesla = require('./tesla');
 
