@@ -1,4 +1,5 @@
 var SLACK_BOT_NAME = process.env.SLACK_BOT_NAME || 'Tesla Model S';
+var SLACK_CHANNEL = process.env.SLACK_CHANNEL || '#tesla';
 
 var env = process.env.NODE_ENV || 'dev';
 if (env === 'production') {
@@ -6,7 +7,12 @@ if (env === 'production') {
 }
 
 var express = require('express'),
-    tesla = require('./tesla');
+    tesla = require('./tesla'),
+    models = require('./models'),
+    mongoose = require('mongoose'),
+    CronJob = require('cron').CronJob,
+    Slack = require('node-slack'),
+    Bacon = require('baconjs').Bacon;
 
 var app = express();
 app.use(require('body-parser')());
@@ -21,7 +27,8 @@ function sendJson(res) {
 function toSlackMessage(text) {
     return {
         text: text,
-        username: SLACK_BOT_NAME
+        username: SLACK_BOT_NAME,
+        channel: SLACK_CHANNEL
     };
 }
 
@@ -36,7 +43,7 @@ app.post('/slack', function (req, res) {
         } else if (hasCommand(req, 'climate')) {
             tesla.climateState().map(toSlackMessage).onValue(sendJson(res));
         } else if (hasCommand(req, 'position')) {
-            tesla.driveState().map(toSlackMessage).onValue(sendJson(res));
+            tesla.formattedDriveState().map(toSlackMessage).onValue(sendJson(res));
         } else if (hasCommand(req, 'vehicle')) {
             tesla.vehicleState().map(toSlackMessage).onValue(sendJson(res));
         } else if (hasCommand(req, 'honk')) {
@@ -56,4 +63,49 @@ app.get('/', function (req,res) {
 var port = process.env.PORT || 5000;
 app.listen(port, function () {
     console.log("Listening on " + port);
+});
+
+var slack = new Slack(process.env.SLACK_DOMAIN, process.env_RECEIVE_TOKEN);
+
+var updateDriveStateJob =  new CronJob('* * * * *', function(){
+  var driveState = Bacon.retry({source: tesla.driveState,
+                                retries: 3,
+                                delay: function(){return 5000;}});
+  driveState.onError(function(error) {
+    console.error("Error fetching driveState:", error);
+  });
+  driveState.onValue(saveDriveState);
+
+});
+
+
+var informDepartureOrArrivalJob =  new CronJob( '* * * * * ', function(){
+  models.DriveState.find().sort('-_id').limit(2).exec().then(function(results) {
+    var lastState = _.first(results);
+    var nextToLastState = _.last(results);
+    var place = tesla.isInAlreadyKnownPlace(lastState.latitude, lastState.longitude);
+    if(tesla.hasArrivedToKnownPlace(lastState, nextToLastState)){
+      slack.send(toSlackMessage("I have just arrived in " + place.name));
+      console.log("I have just arrived in " + place.name);
+    }
+    else if (tesla.hasDepartedFromKnownPlace(lastState, nextToLastState)) {
+      slack.send(toSlackMessage("I have just departed from " + place.name));
+      console.log("I have just departed from " + place.name);
+    }
+  });
+});
+
+function saveDriveState(state){
+  console.log("Persisting: ", state);
+  new models.DriveState(state).save();
+}
+
+mongoose.connect(process.env.MONGOHQ_URL || process.env.MONGOLAB_URL ||'mongodb://localhost/tesla', function(err){
+  if(err){
+    console.log("Database connection failed, not using features requiring database");
+  }
+  else {
+    updateDriveStateJob.start();
+    informDepartureOrArrivalJob.start();
+  }
 });

@@ -13,13 +13,16 @@
   },
   "dependencies": {
     "newrelic": "~1.7.3",
-    "baconjs": "~0.7.10",
+    "baconjs": "~0.7.14",
     "body-parser": "~1.0.2",
     "express": "~4.1.1",
     "geolib": "^2.0.14",
     "lodash": "^2.4.1",
     "logfmt": "~1.1.2",
-    "teslams": "~0.9.4"
+    "teslams": "~0.9.4",
+    "cron": "1.0.4",
+    "mongoose" : "3.8.12",
+    "node-slack" : ""
   },
   "devDependencies": {
     "supervisor": "~0.5.7",
