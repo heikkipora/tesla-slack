@@ -40,7 +40,7 @@ function fetchChargeState(vehicleId) {
 }
 
 function fetchDriveState(vehicleId) {
-    return Bacon.fromCallback(teslams.get_drive_state, vehicleId);
+    return Bacon.fromCallback(teslams.get_drive_state, vehicleId).flatMap(teslaErrorToBaconError(vehicleId));
 }
 
 function fetchVehicleState(vehicleId) {
@@ -49,6 +49,22 @@ function fetchVehicleState(vehicleId) {
 
 function fetchClimateState(vehicleId) {
     return Bacon.fromCallback(teslams.get_climate_state, vehicleId);
+}
+
+function wakeUp(vehicleId) {
+  return Bacon.fromCallback(teslams.wake_up, vehicleId);
+}
+
+function teslaErrorToBaconError(vehicleId) {
+  return function(teslaAPIresponse) {
+    if(teslaAPIresponse instanceof Error) {
+      wakeUp(vehicleId).onValue(function(apiResponse) {
+        console.log("Tried to wakeup tesla: ", apiResponse);
+      });
+      return new Bacon.Error(teslaAPIresponse);
+    }
+    else return teslaAPIresponse;
+  };
 }
 
 function mapRange(state) {
@@ -68,15 +84,22 @@ function mapChargeResponse(state) {
             return 'Disconnected. ' + mapRange(state);
     }
 }
-
 function mapDriveResponse(state) {
+  return  _.assign({}, state,
+    {speed: Math.round(milesToKm(state.speed || 0)),
+     location: [state.longitude, state.latitude],
+     shift_state: state.shift_state ? state.shift_state : "P"
+    });
+}
+
+function formatDriveResponse(state) {
     var speed = milesToKm(state.speed || 0).toFixed(0);
     var speedTxt = 'Speed: ' + speed + 'km/h\n';
     var locationTxt = 'Position: unknown';
     if (state.latitude && state.longitude) {
         var inKnownPlace = isInAlreadyKnownPlace(state.latitude, state.longitude);
-        var position = state.latitude + ',' + state.longitude
-        var googleMapsUrl = 'http://maps.googleapis.com/maps/api/staticmap?center=' + position + '&markers=' + position + '&size=600x300&zoom=12'
+        var position = state.latitude + ',' + state.longitude;
+        var googleMapsUrl = 'http://maps.googleapis.com/maps/api/staticmap?center=' + position + '&markers=' + position + '&size=600x300&zoom=12';
         locationTxt = 'Position: ' + (inKnownPlace ? inKnownPlace.name + ' @ ': '' ) + googleMapsUrl;
     }
     return speedTxt + locationTxt;
@@ -88,6 +111,19 @@ function isInAlreadyKnownPlace(latitude, longitude) {
       return distance < place.radius;
     });
 }
+
+function hasArrivedToKnownPlace(newestState, olderState) {
+  return newestState.shift_state == 'P' &&
+         olderState.shift_state != 'P' &&
+         isInAlreadyKnownPlace(newestState.latitude, newestState.longitude);
+}
+
+function hasDepartedFromKnownPlace(newestState, olderState) {
+  return newestState.shift_state != 'P' &&
+    olderState.shift_state == 'P' &&
+    isInAlreadyKnownPlace(olderState.latitude, olderState.longitude);
+}
+
 function mapVehicleResponse(state) {
     return 'Firmware version: ' + state.car_version + '\nLocked: ' + (state.locked ? 'yes' : 'no');
 }
@@ -125,6 +161,9 @@ exports.chargeState = function () {
 exports.driveState = function () {
     return fetchVehicleId().flatMap(fetchDriveState).map(mapDriveResponse);
 };
+exports.formattedDriveState = function() {
+  return fetchVehicleId().flatMap(fetchDriveState).map(formatDriveResponse);
+};
 
 exports.vehicleState = function () {
     return fetchVehicleId().flatMap(fetchVehicleState).map(mapVehicleResponse);
@@ -133,3 +172,7 @@ exports.vehicleState = function () {
 exports.climateState = function () {
     return fetchVehicleId().flatMap(fetchClimateState).map(mapClimateResponse);
 };
+
+exports.isInAlreadyKnownPlace = isInAlreadyKnownPlace;
+exports.hasArrivedToKnownPlace = hasArrivedToKnownPlace;
+exports.hasDepartedFromKnownPlace = hasDepartedFromKnownPlace;
