@@ -85,12 +85,12 @@ var informDepartureOrArrivalJob =  new CronJob( '* * * * * ', function(){
     var nextToLastState = _.last(results);
     var place = tesla.isInAlreadyKnownPlace(lastState.latitude, lastState.longitude);
     if(tesla.hasArrivedToKnownPlace(lastState, nextToLastState)){
-      slack.send(toSlackMessage("I have just arrived in " + place.name));
       console.log("I have just arrived in " + place.name);
+      slack.send(toSlackMessage("I have just arrived in " + place.name));
     }
     else if (tesla.hasDepartedFromKnownPlace(lastState, nextToLastState)) {
-      slack.send(toSlackMessage("I have just departed from " + place.name));
       console.log("I have just departed from " + place.name);
+      slack.send(toSlackMessage("I have just departed from " + place.name));
     }
   });
 });
