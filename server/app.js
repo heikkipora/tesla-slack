@@ -65,7 +65,7 @@ app.listen(port, function () {
     console.log("Listening on " + port);
 });
 
-var slack = new Slack(process.env.SLACK_DOMAIN, process.env_RECEIVE_TOKEN);
+var slack = new Slack(process.env.SLACK_DOMAIN, process.env_SEND_TOKEN);
 
 var updateDriveStateJob =  new CronJob('* * * * *', function(){
   var driveState = Bacon.retry({source: tesla.driveState,
