@@ -7,7 +7,9 @@ Integrates your Tesla Model S to https://slack.com
 
 Uses https://github.com/hjespers/teslams for Tesla portal integration.
 
-Take a look at http://docs.timdorr.apiary.io/ for reference
+Take a look at http://docs.timdorr.apiary.io for reference
+
+I [blogged](blogpost.md) about the integration at Reaktor's site: http://reaktor.fi/blog/talking-tesla
 
 Requirements
 ------------
