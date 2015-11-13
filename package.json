@@ -1,7 +1,7 @@
 {
   "name": "tesla-slack",
   "description": "Integration of Tesla Model S REST API to Slack",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "server/app.js",
   "scripts": {},
   "repository": {
@@ -9,23 +9,23 @@
     "url": "git://github.com:heikkipora/tesla-slack.git"
   },
   "engines": {
-    "node": "~0.10"
+    "node": "5.0.0"
   },
   "dependencies": {
-    "newrelic": "~1.7.3",
-    "baconjs": "~0.7.14",
-    "body-parser": "~1.0.2",
-    "express": "~4.1.1",
-    "geolib": "^2.0.14",
-    "lodash": "^2.4.1",
-    "logfmt": "~1.1.2",
+    "newrelic": "1.23.1",
+    "baconjs": "0.7.80",
+    "body-parser": "1.14.1",
+    "express": "4.13.3",
+    "geolib": "^2.0.18",
+    "lodash": "^3.10.1",
+    "logfmt": "1.2.0",
     "teslams": "1.0.1",
-    "cron": "1.0.4",
-    "mongoose" : "3.8.12",
+    "cron": "1.0.9",
+    "mongoose": "4.2.5",
     "node-slack" : ""
   },
   "devDependencies": {
-    "supervisor": "~0.5.7",
-    "jshint": "~2.5.0"
+    "supervisor": "0.9.1",
+    "jshint": "2.9.1-rc1"
   }
 }
