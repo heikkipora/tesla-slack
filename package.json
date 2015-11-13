@@ -19,7 +19,7 @@
     "geolib": "^2.0.14",
     "lodash": "^2.4.1",
     "logfmt": "~1.1.2",
-    "teslams": "~1.0.0",
+    "teslams": "1.0.1",
     "cron": "1.0.4",
     "mongoose" : "3.8.12",
     "node-slack" : ""
