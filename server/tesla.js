@@ -59,7 +59,7 @@ function teslaErrorToBaconError(vehicleId) {
   return function(teslaAPIresponse) {
     if(teslaAPIresponse instanceof Error) {
       wakeUp(vehicleId).onValue(function(apiResponse) {
-        console.log("Tried to wakeup tesla: ", apiResponse);
+        console.log("Tried to wake up vehicle: ", apiResponse);
       });
       return new Bacon.Error(teslaAPIresponse);
     }
@@ -112,18 +112,6 @@ function isInAlreadyKnownPlace(latitude, longitude) {
     });
 }
 
-function hasArrivedToKnownPlace(newestState, olderState) {
-  return newestState.shift_state == 'P' &&
-         olderState.shift_state != 'P' &&
-         isInAlreadyKnownPlace(newestState.latitude, newestState.longitude);
-}
-
-function hasDepartedFromKnownPlace(newestState, olderState) {
-  return newestState.shift_state != 'P' &&
-    olderState.shift_state == 'P' &&
-    isInAlreadyKnownPlace(olderState.latitude, olderState.longitude);
-}
-
 function mapVehicleResponse(state) {
     return 'Firmware version: ' + state.car_version + '\nLocked: ' + (state.locked ? 'yes' : 'no');
 }
@@ -172,7 +160,3 @@ exports.vehicleState = function () {
 exports.climateState = function () {
     return fetchVehicleId().flatMap(fetchClimateState).map(mapClimateResponse);
 };
-
-exports.isInAlreadyKnownPlace = isInAlreadyKnownPlace;
-exports.hasArrivedToKnownPlace = hasArrivedToKnownPlace;
-exports.hasDepartedFromKnownPlace = hasDepartedFromKnownPlace;
