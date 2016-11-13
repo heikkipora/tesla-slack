@@ -5,7 +5,8 @@
   "license": "MIT",
   "main": "server/app.js",
   "scripts": {
-    "jshint": "./node_modules/jshint/bin/jshint server/"
+    "jshint": "./node_modules/jshint/bin/jshint server/",
+    "start": "node server/app.js"
   },
   "repository": {
     "type": "git",
