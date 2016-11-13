@@ -1,9 +1,8 @@
 {
   "name": "tesla-slack",
   "description": "Integration of Tesla Model S REST API to Slack",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "server/app.js",
-  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git://github.com:heikkipora/tesla-slack.git"
