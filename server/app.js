@@ -7,10 +7,11 @@ if (env === 'production') {
 
 var express = require('express'),
     tesla = require('./tesla'),
-    Bacon = require('baconjs').Bacon;
+    Bacon = require('baconjs').Bacon,
+    bodyParser = require('body-parser');
 
 var app = express();
-app.use(require('body-parser')());
+app.use(bodyParser.json());
 app.use(require('logfmt').requestLogger());
 
 function sendJson(res) {
