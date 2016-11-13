@@ -4,6 +4,9 @@
   "version": "1.0.2",
   "license": "MIT",
   "main": "server/app.js",
+  "scripts": {
+    "jshint": "./node_modules/jshint/bin/jshint server/"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com:heikkipora/tesla-slack.git"
