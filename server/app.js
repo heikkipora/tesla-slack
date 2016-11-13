@@ -11,7 +11,7 @@ var express = require('express'),
     bodyParser = require('body-parser');
 
 var app = express();
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(require('logfmt').requestLogger());
 
 function sendJson(res) {
@@ -47,7 +47,7 @@ app.post('/slack', function (req, res) {
             res.json(toSlackMessage('Supported commands: battery, honk, position, vehicle, climate'));
         }
     } else {
-        res.send(403);
+        res.sendStatus(403);
     }
 });
 
