@@ -20,17 +20,14 @@ The following ENV variables:
 * TESLA_USERNAME - username to the Tesla portal
 * TESLA_PASSWORD - password to the Tesla portal
 * SLACK_RECEIVE_TOKEN - for "outgoing Slack webhooks"
-* SLACK_SEND_TOKEN - for "incoming Slack webhooks"
-* SLACK_DOMAIN - Slack domain name where notifications are sent to
-* SLACK_CHANNEL - Slack channel where notifications are sent to
 * MONGOHQ_URL or MONGOLAB_UR - or an instance of mongodb running at localhost with db "tesla" available
 
 Testing locally
 ---------------
 
-Start it (automatically relaunching if you modify any of the code)
+Start it
 
-    ./start.sh
+    npm start
 
 Fetch battery information:
 

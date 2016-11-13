@@ -26,7 +26,6 @@
     "teslams": "1.1.6"
   },
   "devDependencies": {
-    "supervisor": "0.11.0",
     "jshint": "2.9.4"
   }
 }
