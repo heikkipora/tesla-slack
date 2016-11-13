@@ -9,23 +9,23 @@
     "url": "git://github.com:heikkipora/tesla-slack.git"
   },
   "engines": {
-    "node": "5.0.0"
+    "node": "6.9.1"
   },
   "dependencies": {
-    "newrelic": "1.23.1",
-    "baconjs": "0.7.80",
-    "body-parser": "1.14.1",
-    "express": "4.13.3",
-    "geolib": "^2.0.18",
-    "lodash": "^3.10.1",
+    "newrelic": "1.34.0",
+    "baconjs": "0.7.88",
+    "body-parser": "1.15.2",
+    "express": "4.14.0",
+    "geolib": "2.0.22",
+    "lodash": "4.16.6",
     "logfmt": "1.2.0",
-    "teslams": "1.0.1",
-    "cron": "1.0.9",
-    "mongoose": "4.2.5",
+    "teslams": "1.1.6",
+    "cron": "1.1.1",
+    "mongoose": "4.6.7",
     "node-slack" : ""
   },
   "devDependencies": {
-    "supervisor": "0.9.1",
-    "jshint": "2.9.1-rc1"
+    "supervisor": "0.11.0",
+    "jshint": "2.9.4"
   }
 }
