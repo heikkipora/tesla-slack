@@ -5,7 +5,8 @@ var Bacon = require('baconjs').Bacon,
     geolib = require('geolib'),
     knownPlaces = require('./known-places');
 
-var cachedVehicleId;
+var cachedVehicles = [];
+fetchVehicles().log()
 
 function milesToKm(value) {
     return value * 1.60934;
@@ -25,13 +26,35 @@ function toHoursAndMinutes(value) {
     return msg;
 }
 
-function fetchVehicleId() {
-    if (cachedVehicleId) {
-        return Bacon.once(cachedVehicleId);
+function fetchVehicles() {
+    if (cachedVehicles.length > 0) {
+        return Bacon.later(0, cachedVehicles);
     }
-    return Bacon.fromCallback(teslams.get_vid, TESLA_CREDENTIALS).doAction(function(vehicleId) {
-        console.log('Cached vehicle id ' + vehicleId);
-        cachedVehicleId = vehicleId;
+    return Bacon.fromNodeCallback(function(callback) {
+      teslams.all(TESLA_CREDENTIALS, function(err, response, body) {
+          callback(err, body);
+      })
+    })
+        .map(JSON.parse)
+        .map('.response')
+        .map(function(response) {
+            return response.map(function(vehicle) {
+                return { id: vehicle.id, name: vehicle.display_name.toLowerCase() };
+            })
+        })
+        .doAction(function(vehicleIds) {
+            cachedVehicles = vehicleIds;
+        })
+}
+
+function nameToVehicleId(name) {
+    return fetchVehicles().flatMap(function(vehicles) {
+        var vehicle = _.find(vehicles, {name: name.toLowerCase()})
+        if (vehicle) {
+          return Bacon.once(vehicle.id)
+        } else {
+          return Bacon.once(new Bacon.Error('Unrecognized vehicle name: ' + name))
+        }
     });
 }
 
@@ -58,6 +81,7 @@ function wakeUp(vehicleId) {
 function teslaErrorToBaconError(vehicleId) {
   return function(teslaAPIresponse) {
     if(teslaAPIresponse instanceof Error) {
+      console.log(teslaAPIresponse)
       wakeUp(vehicleId).onValue(function(apiResponse) {
         console.log("Tried to wake up vehicle: ", apiResponse);
       });
@@ -142,21 +166,27 @@ function feelsLike(temp) {
     }
 }
 
-exports.chargeState = function () {
-    return fetchVehicleId().flatMap(fetchChargeState).map(mapChargeResponse);
+exports.vehicleNames = function() {
+    return fetchVehicles().map(function(vehicles) {
+      return 'Known vehicles: ' + _.map(vehicles, 'name').join(', ')
+    });
+}
+
+exports.chargeState = function(name) {
+    return nameToVehicleId(name).flatMap(fetchChargeState).map(mapChargeResponse);
 };
 
-exports.driveState = function () {
-    return fetchVehicleId().flatMap(fetchDriveState).map(mapDriveResponse);
+exports.driveState = function(name) {
+    return nameToVehicleId(name).flatMap(fetchDriveState).map(mapDriveResponse);
 };
-exports.formattedDriveState = function() {
-  return fetchVehicleId().flatMap(fetchDriveState).map(formatDriveResponse);
-};
-
-exports.vehicleState = function () {
-    return fetchVehicleId().flatMap(fetchVehicleState).map(mapVehicleResponse);
+exports.formattedDriveState = function(name) {
+  return nameToVehicleId(name).flatMap(fetchDriveState).map(formatDriveResponse);
 };
 
-exports.climateState = function () {
-    return fetchVehicleId().flatMap(fetchClimateState).map(mapClimateResponse);
+exports.vehicleState = function(name) {
+    return nameToVehicleId(name).flatMap(fetchVehicleState).map(mapVehicleResponse);
+};
+
+exports.climateState = function(name) {
+    return nameToVehicleId(name).flatMap(fetchClimateState).map(mapClimateResponse);
 };

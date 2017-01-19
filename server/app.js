@@ -31,20 +31,27 @@ function hasCommand(req, name) {
     return req.body.text.indexOf(name) >= 0;
 }
 
+function errorText(error) {
+    return JSON.stringify(error)
+}
+
 app.post('/slack', function (req, res) {
     if (req.body.token === process.env.SLACK_RECEIVE_TOKEN) {
-        if (hasCommand(req, 'battery')) {
-            tesla.chargeState().map(toSlackMessage).onValue(sendJson(res));
-        } else if (hasCommand(req, 'climate')) {
-            tesla.climateState().map(toSlackMessage).onValue(sendJson(res));
-        } else if (hasCommand(req, 'position')) {
-            tesla.formattedDriveState().map(toSlackMessage).onValue(sendJson(res));
-        } else if (hasCommand(req, 'vehicle')) {
-            tesla.vehicleState().map(toSlackMessage).onValue(sendJson(res));
-        } else if (hasCommand(req, 'honk')) {
-            res.json(toSlackMessage(':trumpet: TÖÖÖÖÖT-TÖÖÖÖÖÖÖÖÖÖÖT!'));
+        var args = req.body.text.trim().split(' ')
+        var name = args[0]
+        var command = args.length > 1 ? args[1] : undefined
+        if (command === 'battery') {
+            tesla.chargeState(name).mapError(errorText).map(toSlackMessage).onValue(sendJson(res));
+        } else if (command === 'climate') {
+            tesla.climateState(name).mapError(errorText).map(toSlackMessage).onValue(sendJson(res));
+        } else if (command === 'position') {
+            tesla.formattedDriveState(name).mapError(errorText).map(toSlackMessage).onValue(sendJson(res));
+        } else if (command === 'vehicle') {
+            tesla.vehicleState(name).mapError(errorText).map(toSlackMessage).onValue(sendJson(res));
         } else {
-            res.json(toSlackMessage('Supported commands: battery, honk, position, vehicle, climate'));
+            tesla.vehicleNames().map(function(text) {
+              return 'Supported commands: battery, climate, position, vehicle. Give a vehicle name before the command.\n' + text
+            }).mapError(errorText).map(toSlackMessage).onValue(sendJson(res));
         }
     } else {
         res.sendStatus(403);
