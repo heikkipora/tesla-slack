@@ -37,9 +37,8 @@ function errorText(error) {
 
 app.post('/slack', function (req, res) {
     if (req.body.token === process.env.SLACK_RECEIVE_TOKEN) {
-        var args = req.body.text.trim().split(' ')
-        var name = args[0]
-        var command = args.length > 1 ? args[1] : undefined
+        var command = req.body.text.trim()
+        var name = 'tessi'
         if (command === 'battery') {
             tesla.chargeState(name).mapError(errorText).map(toSlackMessage).onValue(sendJson(res));
         } else if (command === 'climate') {
@@ -49,9 +48,7 @@ app.post('/slack', function (req, res) {
         } else if (command === 'vehicle') {
             tesla.vehicleState(name).mapError(errorText).map(toSlackMessage).onValue(sendJson(res));
         } else {
-            tesla.vehicleNames().map(function(text) {
-              return 'Supported commands: battery, climate, position, vehicle. Give a vehicle name before the command.\n' + text
-            }).mapError(errorText).map(toSlackMessage).onValue(sendJson(res));
+            res.json(toSlackMessage('Supported commands: battery, climate, position, vehicle.'))
         }
     } else {
         res.sendStatus(403);
