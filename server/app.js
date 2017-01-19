@@ -37,8 +37,8 @@ function errorText(error) {
 
 app.post('/slack', function (req, res) {
     if (req.body.token === process.env.SLACK_RECEIVE_TOKEN) {
-        var command = req.body.text.trim()
-        console.log('Command: ' + command)
+        var args = req.body.text.trim().split(' ')
+        var command = args.length > 1 ? args[1] : undefined
         var name = 'tessi'
         if (command === 'battery') {
             tesla.chargeState(name).mapError(errorText).map(toSlackMessage).onValue(sendJson(res));
