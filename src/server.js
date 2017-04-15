@@ -1,16 +1,10 @@
-if (process.env.NODE_ENV == 'production') {
-  require('newrelic')
-}
-
 const _ = require('lodash')
 const bodyParser = require('body-parser')
 const express = require('express')
-const logfmt = require('logfmt')
 const {listVehicles, vehicleInfo, vehicleWakeUp} = require('./tesla')
 
 const app = express()
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(logfmt.requestLogger())
+app.use(bodyParser.urlencoded({extended: false}))
 
 app.post('/slack', async (req, res) => {
   if (req.body.token != process.env.SLACK_RECEIVE_TOKEN) {
@@ -34,12 +28,12 @@ app.post('/slack', async (req, res) => {
     }
   } catch (err) {
     console.error(err)
-    res.status(400).json(err)
+    res.status(500).send()
   }
 })
 
-app.get('/', (req,res) => {
-  // used for newrelic monitoring at Heroku
+// used for newrelic monitoring at Heroku
+app.get('/', (req, res) => {
   res.send('ok')
 })
 
@@ -47,5 +41,5 @@ const port = process.env.PORT || 5000
 app.listen(port, () => console.log(`Listening on *:${port}`))
 
 function toSlackMessage(text) {
-  return { text: text,  username: process.env.SLACK_BOT_NAME || 'Tesla Bot' }
+  return {text, username: process.env.SLACK_BOT_NAME || 'Tesla Bot'}
 }
