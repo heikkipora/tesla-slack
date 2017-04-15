@@ -1,5 +1,4 @@
-tesla-slack
-===========
+# tesla-slack
 
 Integrates your Tesla Model S/X fleet to https://slack.com
 
@@ -9,10 +8,9 @@ Uses https://github.com/gutenye/tesla-api for Tesla portal integration.
 
 Take a look at http://docs.timdorr.apiary.io for reference
 
-I [blogged](blogpost.md) about the integration at Reaktor's site: https://www.reaktor.com/blog/talking-tesla
+I [blogged](blogpost.md) about the integration at Reaktor's site: https://www.reaktor.com/blog/talking-tesla in 2014 (and an older version of this piece of software)
 
-Requirements
-------------
+## Requirements
 
 Node.js 7.9.0 from https://nodejs.org
 
@@ -21,8 +19,7 @@ The following ENV variables:
 * TESLA_PASSWORD - password to the Tesla portal
 * SLACK_RECEIVE_TOKEN - for "outgoing Slack webhooks"
 
-Testing locally
----------------
+## Testing locally
 
 Start it
 
