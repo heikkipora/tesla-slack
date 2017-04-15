@@ -1,26 +1,25 @@
 tesla-slack
 ===========
 
-Integrates your Tesla Model S to https://slack.com
+Integrates your Tesla Model S/X fleet to https://slack.com
 
 !["Slack integration screenshot"](screenshot.png)
 
-Uses https://github.com/hjespers/teslams for Tesla portal integration.
+Uses https://github.com/gutenye/tesla-api for Tesla portal integration.
 
 Take a look at http://docs.timdorr.apiary.io for reference
 
-I [blogged](blogpost.md) about the integration at Reaktor's site: http://reaktor.fi/blog/talking-tesla
+I [blogged](blogpost.md) about the integration at Reaktor's site: https://www.reaktor.com/blog/talking-tesla
 
 Requirements
 ------------
 
-Node.js & NPM from http://nodejs.org
+Node.js 7.9.0 from https://nodejs.org
 
 The following ENV variables:
 * TESLA_USERNAME - username to the Tesla portal
 * TESLA_PASSWORD - password to the Tesla portal
 * SLACK_RECEIVE_TOKEN - for "outgoing Slack webhooks"
-* MONGOHQ_URL or MONGOLAB_UR - or an instance of mongodb running at localhost with db "tesla" available
 
 Testing locally
 ---------------
@@ -29,18 +28,14 @@ Start it
 
     npm start
 
-Fetch battery information:
+Fetch vehicle list:
 
-    curl --data "token=<insert-SLACK_RECEIVE_TOKEN-here>&text=battery" http://localhost:5000/slack
+    curl --data "token=<insert-SLACK_RECEIVE_TOKEN-here>&text=!tesla" http://localhost:5000/slack
 
-Fetch position information:
+Fetch vehicle battery, speed and location information:
 
-    curl --data "token=<insert-SLACK_RECEIVE_TOKEN-here>&text=position" http://localhost:5000/slack
-
-Fetch vehicle information:
-
-    curl --data "token=<insert-SLACK_RECEIVE_TOKEN-here>&text=vehicle" http://localhost:5000/slack
+    curl --data "token=<insert-SLACK_RECEIVE_TOKEN-here>&text=!tesla <inser-vehicle-name-name>" http://localhost:5000/slack
 
 Works nicely when deployed to Heroku.
 
-Point the outoing Slack webhook configuration to /slack on your node.js instance.
+Point the outoing Slack webhook configuration to /slack on your Node.js instance.
