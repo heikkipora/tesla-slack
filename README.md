@@ -2,11 +2,11 @@
 
 Integrates your Tesla Model S/X fleet to https://slack.com
 
+This piece of code serves as an example of how to a) integrate to Slack b) integrate to Tesla APIs. If you happen to have a fleet of shared Tesla vehicles, it will also provide information to the users of the vehicles' whereabouts.
+
 !["Slack integration screenshot"](screenshot.png)
 
 Uses https://github.com/gutenye/tesla-api for Tesla portal integration.
-
-Take a look at http://docs.timdorr.apiary.io for reference
 
 I [blogged](blogpost.md) about the integration at Reaktor's site: https://www.reaktor.com/blog/talking-tesla in 2014 (and an older version of this piece of software)
 
