@@ -1,10 +1,10 @@
-const  _ = require('lodash')
+const _ = require('lodash')
 const geolib = require('geolib')
 const knownPlaces = require('./known-places')
 const Tesla = require('tesla-api')
 
-async function listVehicles(email, password) {
-  return await Tesla.login({email, password, distanceUnit: 'km'})
+function listVehicles(email, password) {
+  return Tesla.login({email, password, distanceUnit: 'km'})
 }
 
 async function vehicleWakeUp(vehicle) {
@@ -27,9 +27,10 @@ async function vehicleBattery(vehicle) {
   const state = await vehicle.chargeState()
   const range = `Current range is ${state.estBatteryRange}-${state.idealBatteryRange} km.`
   switch (state.chargingState) {
-    case 'Charging':
+    case 'Charging': {
       const timeToFull = toHoursAndMinutes(state.timeToFullCharge)
       return [`Charging at ${state.chargerPower} kW, complete in ${timeToFull}. ${range}`]
+    }
     case 'Complete':
       return [`Fully charged. ${range}`]
     default:

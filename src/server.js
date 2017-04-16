@@ -1,14 +1,15 @@
 const _ = require('lodash')
 const bodyParser = require('body-parser')
 const express = require('express')
-const {listVehicles, vehicleInfo, vehicleWakeUp} = require('./tesla')
+const {listVehicles, vehicleInfo} = require('./tesla')
 
 const app = express()
 app.use(bodyParser.urlencoded({extended: false}))
 
 app.post('/slack', async (req, res) => {
   if (req.body.token != process.env.SLACK_RECEIVE_TOKEN) {
-    return res.sendStatus(403)
+    res.sendStatus(403)
+    return
   }
 
   const args = req.body.text.trim().split(' ')

@@ -4,7 +4,8 @@
   "version": "2.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "test": "./node_modules/.bin/eslint src/*.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,8 @@
     "geolib": "2.0.22",
     "lodash": "4.17.4",
     "tesla-api": "1.0.1"
+  },
+  "devDependencies": {
+    "eslint": "3.19.0"
   }
 }
