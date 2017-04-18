@@ -29,7 +29,7 @@ app.post('/slack', async (req, res) => {
     }
   } catch (err) {
     console.error(err)
-    res.json(toSlackMessage(`Tesla API call failed: (${err.body.error})`))
+    res.json(toSlackMessage(`Tesla API call failed: ${err.body.error}`))
   }
 })
 
