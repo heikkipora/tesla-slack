@@ -15,8 +15,8 @@
     "node": "7.9.0"
   },
   "dependencies": {
-    "body-parser": "1.17.1",
-    "express": "4.15.2",
+    "body-parser": "1.17.2",
+    "express": "4.15.3",
     "geolib": "2.0.22",
     "lodash": "4.17.4",
     "tesla-api": "1.0.1"
