@@ -12,7 +12,8 @@
     "url": "git://github.com:heikkipora/tesla-slack.git"
   },
   "engines": {
-    "node": "7.9.0"
+    "node": "8.1.4",
+    "npm": "5.0.4"
   },
   "dependencies": {
     "body-parser": "1.17.2",
@@ -22,6 +23,6 @@
     "tesla-api": "1.0.1"
   },
   "devDependencies": {
-    "eslint": "4.0.0"
+    "eslint": "4.2.0"
   }
 }
