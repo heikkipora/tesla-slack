@@ -23,6 +23,6 @@
     "tesla-api": "1.0.1"
   },
   "devDependencies": {
-    "eslint": "4.2.0"
+    "eslint": "4.3.0"
   }
 }
