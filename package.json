@@ -16,7 +16,7 @@
     "npm": "5.4.1"
   },
   "dependencies": {
-    "body-parser": "1.17.2",
+    "body-parser": "1.18.0",
     "express": "4.15.4",
     "geolib": "2.0.23",
     "lodash": "4.17.4",
@@ -24,6 +24,6 @@
     "tesla-api": "1.0.1"
   },
   "devDependencies": {
-    "eslint": "4.5.0"
+    "eslint": "4.6.1"
   }
 }
