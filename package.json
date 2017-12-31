@@ -18,11 +18,11 @@
   "dependencies": {
     "body-parser": "1.18.2",
     "express": "4.16.2",
-    "geolib": "2.0.23",
+    "geolib": "2.0.24",
     "lodash": "4.17.4",
     "tesla-api": "1.0.1"
   },
   "devDependencies": {
-    "eslint": "4.8.0"
+    "eslint": "4.14.0"
   }
 }
