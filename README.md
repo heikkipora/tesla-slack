@@ -12,7 +12,7 @@ I [blogged](blogpost.md) about the integration at Reaktor's site: https://www.re
 
 ## Requirements
 
-Node.js 7.9.0 from https://nodejs.org
+Node.js 10.5.0 from https://nodejs.org
 
 The following ENV variables:
 * TESLA_USERNAME - username to the Tesla portal
