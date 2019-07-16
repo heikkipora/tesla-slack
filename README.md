@@ -18,6 +18,7 @@ The following ENV variables:
 * TESLA_USERNAME - username to the Tesla portal
 * TESLA_PASSWORD - password to the Tesla portal
 * SLACK_RECEIVE_TOKEN - for "outgoing Slack webhooks"
+* GOOGLE_API_KEY - your Google Static Maps API Key
 
 ## Testing locally
 

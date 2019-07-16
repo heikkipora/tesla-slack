@@ -21,7 +21,8 @@ app.post('/slack', async (req, res) => {
     const vehicle = _.find(vehicles, vehicle => vehicle.displayName.toLowerCase() == name.toLowerCase())
 
     if (vehicle) {
-      const infoLines = await vehicleInfo(vehicle)
+      const googleApiKey = process.env.GOOGLE_API_KEY || 'api-key-missing'
+      const infoLines = await vehicleInfo(vehicle, googleApiKey)
       const response = [`Vehicle: ${vehicle.displayName}`].concat(infoLines).join('\n')
       res.json(toSlackMessage(response))
     } else {

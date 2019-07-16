@@ -11,16 +11,16 @@ async function vehicleWakeUp(vehicle) {
   await vehicle.wakeUp()
 }
 
-async function vehicleInfo(vehicle) {
+async function vehicleInfo(vehicle, googleApiKey) {
   const battery = await vehicleBattery(vehicle)
-  const speedAndLocation = await vehicleSpeedAndLocation(vehicle)
+  const speedAndLocation = await vehicleSpeedAndLocation(vehicle, googleApiKey)
   return battery.concat(speedAndLocation)
 }
 
-async function vehicleSpeedAndLocation(vehicle) {
+async function vehicleSpeedAndLocation(vehicle, googleApiKey) {
   const state = await vehicle.driveState()
   return [`Speed: ${state.speed || 0} km/h`,
-          `Location: ${location(state)}`]
+          `Location: ${location(state, googleApiKey)}`]
 }
 
 async function vehicleBattery(vehicle) {
@@ -52,11 +52,11 @@ function toHoursAndMinutes(value) {
   return msg
 }
 
-function location(state) {
+function location(state, googleApiKey) {
   if (state.latitude && state.longitude) {
     const inKnownPlace = isInKnownPlace(state.latitude, state.longitude)
     const position = `${state.latitude},${state.longitude}`
-    const googleMapsUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${position}&markers=${position}&size=600x300&zoom=12`
+    const googleMapsUrl = `https://maps.googleapis.com/maps/api/staticmap?key=${googleApiKey}&center=${position}&markers=${position}&size=600x300&zoom=12`
     return inKnownPlace ? `${inKnownPlace.name} @ ${googleMapsUrl}` : googleMapsUrl
   }
   return 'unknown'
