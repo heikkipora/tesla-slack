@@ -12,8 +12,8 @@
     "url": "git://github.com:heikkipora/tesla-slack.git"
   },
   "engines": {
-    "node": "10.13.0",
-    "npm": "6.4.1"
+    "node": "12.14.0",
+    "npm": "6.13.4"
   },
   "dependencies": {
     "body-parser": "1.19.0",
