@@ -32,7 +32,7 @@ Fetch vehicle list:
 
 Fetch vehicle battery, speed and location information:
 
-    curl --data "token=<insert-SLACK_RECEIVE_TOKEN-here>&text=!tesla <inser-vehicle-name-name>" http://localhost:5000/slack
+    curl --data "token=<insert-SLACK_RECEIVE_TOKEN-here>&text=!tesla <insert-vehicle-name-name>" http://localhost:5000/slack
 
 Works nicely when deployed to Heroku.
 
