@@ -29,14 +29,18 @@ app.post('/slack', async (req, res) => {
       res.json(toSlackMessage(`Specify one of the vehicle names: ${vehicleNames.join(', ')}`))
     }
   } catch (err) {
-    console.error(err)
-    res.json(toSlackMessage(`Tesla API call failed: ${err.body.error}`))
+    if (err.response && err.response.data) {
+      console.error(`vehicle=${name}`, err.response.data)
+      if (err.response.data.error.startsWith('vehicle unavailable')) {
+        res.json(toSlackMessage(`Tesla API call failed: Vehicle unavailable`))
+      } else {
+        res.json(toSlackMessage(`Tesla API call failed: ${err.response.data.error}`))
+      }
+    } else {
+      console.error(`vehicle=${name}`, err)
+      res.json(toSlackMessage('Tesla API call failed'))
+    }
   }
-})
-
-// used for newrelic monitoring at Heroku
-app.get('/', (req, res) => {
-  res.send('ok')
 })
 
 const port = process.env.PORT || 5000
