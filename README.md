@@ -34,6 +34,6 @@ Fetch vehicle battery, speed and location information:
 
     curl --data "token=<insert-SLACK_RECEIVE_TOKEN-here>&text=!tesla <insert-vehicle-name-name>" http://localhost:5000/slack
 
-Works nicely when deployed to Heroku.
+~~Works nicely when deployed to Heroku~~ Does not necessarily work (connections timeout) in Heroku since September 2020 - maybe Tesla blocked their outgoing gateway IPs ?
 
 Point the outoing Slack webhook configuration to /slack on your Node.js instance.
