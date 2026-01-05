@@ -1,3 +1,5 @@
+_This project is no longer relevant and has been abandoned_
+
 # tesla-slack
 
 Integrates your Tesla Model S/X fleet to https://slack.com
